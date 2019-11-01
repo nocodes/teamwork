@@ -1,5 +1,6 @@
 import express from 'express';
 import articles from './articles';
+import auth from './auth';
 
 const routers = new express.Router();
 
@@ -9,5 +10,6 @@ routers.route('/').get((request, response) => response.status(400).send({
 }));
 
 routers.use(articles); 
+routers.use(auth);
 
 export default routers;
