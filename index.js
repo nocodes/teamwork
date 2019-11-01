@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 
-app.use('/api/', routers);
+app.use('/api/v1/', routers);
 
 app.use((request, response) => {
   response.status(404).send({
