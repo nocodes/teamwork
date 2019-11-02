@@ -9,19 +9,21 @@ chai.use(chaiThings);
 chai.use(chaiHttp);
 
 describe('Create user account endpoint', () => {
-  it('should return 422 http status', (done) => {
+  it('should return error for empty fields', (done) => {
     const data = {};
     chai.request(server)
       .post('/api/v1/auth/create-user')
       .send(data)
       .end((request, response) => {
         response.body.should.have.property('status')
-          .equal(422);
+          .equal('error');
+        response.body.should.have.property('error')
+          .equal('Field empty');
       });
     done();
   });
 
-  it('should return 201 http status', (done) => {
+  it('should return success for valid entry', (done) => {
     const data = {
       firstName: 'bolaji',
       lastName: 'akande',
@@ -37,17 +39,18 @@ describe('Create user account endpoint', () => {
       .send(data)
       .end((request, response) => {
         response.body.should.have.property('status')
-          .equal(201);
-        response.body.should.have.property('message')
-          .equal('User created successfully');
+          .equal('success');
         response.body.should.have.property('data');
         response.body.data.should.be.an('Object');
         response.body.data.should.have.property('token');
+        response.body.data.should.have.property('userID');
+        response.body.data.should.have.property('message')
+          .equal('User account successfully created');
       });
     done();
   });
 
-  it('should return 409 http status', (done) => {
+  it('should return error for existing email', (done) => {
     const data = {
       firstName: 'bolaji',
       lastName: 'akande',
@@ -63,7 +66,7 @@ describe('Create user account endpoint', () => {
       .send(data)
       .end((request, response) => {
         response.body.should.have.property('status')
-          .equal(409);
+          .equal('error');
         response.body.should.have.property('error')
           .equal('Email already exists !');
       });

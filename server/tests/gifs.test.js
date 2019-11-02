@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import chaiThings from 'chai-things';
 import { describe } from 'mocha';
 import server from '../../index';
-import { users, auth, articles } from '../mock';
+import { users, auth, gifs } from '../mock';
 
 chai.should();
 chai.use(chaiThings);
@@ -25,11 +25,11 @@ before((done) => {
   done();
 });
 
-describe('Articles endpoint tests', () => {
-  it('Should fail to create an article ', (done) => {
+describe('gifs endpoint tests', () => {
+  it('Should fail to create an gif ', (done) => {
     const data = {};
     chai.request(server)
-      .post('/api/v1/articles')
+      .post('/api/v1/gifs')
       .send(data)
       .set('token', token)
       .end((request, response) => {
@@ -40,10 +40,10 @@ describe('Articles endpoint tests', () => {
       });
     done();
   });
-  it('Should fail to create an article due to database issues ', (done) => {
-    const data = { ...articles[1] };
+  it('Should fail to create an gif due to database issues ', (done) => {
+    const data = { ...gifs[1] };
     chai.request(server)
-      .post('/api/v1/articles')
+      .post('/api/v1/gifs')
       .send(data)
       .set('token', token)
       .end((request, response) => {
@@ -54,13 +54,14 @@ describe('Articles endpoint tests', () => {
       });
     done();
   });
-  it('should create an article', (done) => {
+  it('should create a gif', (done) => {
     const data = {
       title: 'Eget duis at tellus at urna condimentum mattis pellentesque id',
-      article: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      //todo - image should be gif
+      image: 'https://images.unsplash.com/photo-1568685002001-1017b6b99e44?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=610&q=80'
     };
     chai.request(server)
-      .post('/api/v1/articles')
+      .post('/api/v1/gifs')
       .send(data)
       .set('token', token)
       .end((request, response) => {
@@ -69,94 +70,84 @@ describe('Articles endpoint tests', () => {
         response.body.should.have.property('data');
         response.body.data.should.be.an('Object');
         response.body.data.should.have.property('message')
-          .equal('Article successfully posted');
+          .equal('GIF image successfully posted”');
+        response.body.data.should.have.property('gifId');
         response.body.data.should.have.property('createdOn');
-        response.body.data.should.have.property('articleId');
         response.body.data.should.have.property('title')
           .equal(data.title);
+        response.body.data.should.have.property('imageUrl')
+          .equal(data.image);
       });
     done();
   });
 
-  it('should not find article', (done) => {
-    const articleID = -1;
+  it('should not find gif', (done) => {
+    const gifID = -1;
     chai.request(server)
-      .get(`/api/v1/articles/${articleID}`)
+      .get(`/api/v1/gifs/${gifID}`)
       .set('token', token)
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal('error');
         response.body.should.have.property('error')
-          .equal('Article not found !');
+          .equal('GIF not found !');
       });
     done();
   });
 
-  it('should find article', (done) => {
-    const articleID = 1;
+  it('should find gif', (done) => {
+    const gifID = 1;
     chai.request(server)
-      .get(`/api/v1/articles/${articleID}`)
+      .get(`/api/v1/gifs/${gifID}`)
       .set('token', token)
       .end((request, response) => {
-        response.body.should.have.property('status')
+         response.body.should.have.property('status')
           .equal('success');
         response.body.should.have.property('data');
         response.body.data.should.be.an('Object');
         response.body.data.should.have.property('id');
         response.body.data.should.have.property('createdOn');
         response.body.data.should.have.property('title');
-        response.body.data.should.have.property('article');
+        response.body.data.should.have.property('url');
         response.body.data.comments.should.be.an('Array');
       });
     done();
   });
 
-  it('should get feeds', (done) => {
-    chai.request(server)
-      .get('/api/v1/feeds')
-      .set('token', token)
-      .end((request, response) => {
-        response.body.should.have.property('status')
-          .equal('success');
-        response.body.should.have.property('data');
-        response.body.data.should.be.an('Array');
-      });
-    done(); 
-  });
 
-   it('should delete article', (done) => {
-    const articleID = 1;
+   it('should delete gif', (done) => {
+    const gifID = 1;
     chai.request(server)
-      .delete(`/api/v1/articles/${articleID}`)
+      .delete(`/api/v1/gifs/${gifID}`)
       .set('token', token)
       .end((request, response) => {
-        response.body.should.have.property('status')
+         response.body.should.have.property('status')
           .equal('success');
         response.body.data.should.have.property('message')
-          .equal('Article successfully deleted');
+          .equal('gif post successfully deleted');
       });
     done();
   });
 
-  it('should fail to delete article', (done) => {
-    const articleID = 9;
+  it('should fail to delete gif', (done) => {
+    const gifID = 9;
     chai.request(server)
-      .delete(`/api/v1/articles/${articleID}`)
+      .delete(`/api/v1/gifs/${gifID}`)
       .set('token', token)
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal('error');
         response.body.should.have.property('error')
-          .equal('Article Not Found !!');
+          .equal('gif Not Found !!');
       });
     done();
   });
 
   it('should fail to add comment', (done) => {
     const comment = '';
-    const articleId = 4;
+    const gifId = 4;
     chai.request(server)
-      .post(`/api/v1/articles/${articleId}/comments`)
+      .post(`/api/v1/gifs/${gifId}/comments`)
       .set('token', token)
       .send({ comment })
       .end((request, response) => {
@@ -170,81 +161,22 @@ describe('Articles endpoint tests', () => {
 
   it('should add a comment', (done) => {
     const comment = 'this is what i used to say to people and didn\'t believe me !!';
-    const articleId = 1;
+    const gifId = 1;
     chai.request(server)
-      .post(`/api/v1/articles/${articleId}/comments`)
+      .post(`/api/v1/gifs/${gifId}/comments`)
       .set('token', token)
       .send({ comment })
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal('success');
-        response.body.data.should.have.property('message').equal('comment successfully created');
+        response.body.data.should.have.property('message').equal('comment successfully added.');
         response.body.data.should.have.property('comment').equal(comment);
-        response.body.data.should.have.property('article');
-        response.body.data.should.have.property('articleTitle');
+        response.body.data.should.have.property('gifTitle');
       });
     done();
   });
 
-  it('should fail to edit article due to unavailability of articleId', (done) => {
-    const articleId = 800;
-    const data = {
-      title: 'Eget duis at tellus at urna condimentum mattis pellentesque id',
-      image: 'https://images.unsplash.com/photo-1568685002001-1017b6b99e44?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=610&q=80',
-      article: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    };
-    chai.request(server)
-      .patch(`/api/v1/articles/${articleId}`)
-      .set('token', token)
-      .send(data)
-      .end((request, response) => {
-        response.body.should.have.property('status')
-          .equal('error');
-        response.body.error.should.equal('Article not found !');
-      });
-    done();
-  });
-
-  it('should fail to edit article due to validation', (done) => {
-    const articleId = 1;
-    chai.request(server)
-      .patch(`/api/v1/articles/${articleId}`)
-      .set('token', token)
-      .send({})
-      .end((request, response) => {
-        response.body.should.have.property('status')
-          .equal('error');
-          response.body.error.should.equal('Failed due to validation');
-      });
-    done();
-  });
-
-  it('should edit article', (done) => {
-    const articleId = 1;
-    const data = {
-      title: 'Eget duis at tellus at urna condimentum mattis pellentesque id',
-      article: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    };
-    chai.request(server)
-      .patch(`/api/v1/articles/${articleId}`)
-      .set('token', token)
-      .send(data)
-      .end((request, response) => {
-        response.body.should.have.property('status')
-          .equal('success');
-        response.body.should.have.property('data');
-        response.body.data.should.be.an('Object');
-        response.body.data.should.have.property('message')
-          .equal('Article successfully updated');
-        response.body.data.should.have.property('title')
-          .equal(data.title);
-        response.body.data.should.have.property('article')
-          .equal(data.article);
-      });
-    done();
-  });
-
-  it('should not find article with wrong tag', () => {
+  it('should not find gif with wrong tag', () => {
     const tagId = 100;
     chai.request(server)
       .get(`/api/v1/feeds/${tagId}/tags`)
@@ -254,11 +186,11 @@ describe('Articles endpoint tests', () => {
         response.body.should.have.property('status')
           .equal('error');
         response.body.should.have.property('error')
-          .equal('No articles found !');
+          .equal('No gifs found !');
       });
   });
 
-  it('should find articles by tag', () => {
+  it('should find gifs by tag', () => {
     const tagId = 1;
     chai.request(server)
       .get(`/api/v1/feeds/${tagId}/tags`)
@@ -267,34 +199,34 @@ describe('Articles endpoint tests', () => {
         response.body.should.have.property('status')
           .equal('success');
         response.body.data.should.have.property('message')
-          .equal('Successfully found articles by tag');
+          .equal('Successfully found gifs by tag');
         response.body.data.should.be.an('Array');
       });
   });
 
-  it('should not find article by wrong author', () => {
+  it('should not find gif by wrong author', () => {
     const authorId = 0;
     chai.request(server)
-      .get(`/api/v1/author/articles/${authorId}`)
+      .get(`/api/v1/author/gifs/${authorId}`)
       .set('token', token)
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal('error');
         response.body.should.have.property('error')
-          .equal('No articles found !');
+          .equal('No gifs found !');
       });
   });
 
-  it('should find articles by author', () => {
+  it('should find gifs by author', () => {
     const authorId = 1;
     chai.request(server)
-      .get(`/api/v1/author/articles/${authorId}`)
+      .get(`/api/v1/author/gifs/${authorId}`)
       .set('token', token)
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal('success');
         response.body.data.should.have.property('message')
-          .equal('Successfully found articles by author');
+          .equal('Successfully found gifs by author');
         response.body.data.should.be.an('Array');
       });
   });
