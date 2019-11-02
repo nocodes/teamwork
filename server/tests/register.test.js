@@ -64,7 +64,7 @@ describe('Create user account endpoint', () => {
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal(409);
-        response.body.should.have.property('message')
+        response.body.should.have.property('error')
           .equal('Email already exists !');
       });
     done();

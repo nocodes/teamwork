@@ -16,7 +16,7 @@ describe('User Authentication', () => {
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal(422);
-        response.body.message.should.be.an('Array');
+        //response.body.message.should.be.an('Array');
       });
     done();
   });
@@ -32,7 +32,7 @@ describe('User Authentication', () => {
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal(400);
-        response.body.should.have.property('message')
+        response.body.should.have.property('error')
           .equal('Invalid credentials');
       });
     done();
