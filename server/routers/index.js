@@ -1,5 +1,6 @@
 import express from 'express';
 import articles from './articles';
+import gifs from './gifs';
 import auth from './auth';
 
 const routers = new express.Router();
@@ -9,7 +10,8 @@ routers.route('/').get((request, response) => response.status(400).send({
   message: 'Bad Request Error',
 }));
 
-routers.use(articles); 
+routers.use(articles);
+routers.use(gifs);  
 routers.use(auth);
 
 export default routers;
