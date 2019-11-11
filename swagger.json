@@ -581,6 +581,21 @@
           "type": "string"
         }
       }
+    },
+    "Gif": {
+      "type": "object",
+      "required": [
+        "title",
+        "image"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
     }
   }
 }
