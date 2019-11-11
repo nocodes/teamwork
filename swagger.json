@@ -1,0 +1,601 @@
+{
+  "swagger": "1.0",
+  "info": {
+    "description": "Teamwork is an internal social network for organizations’ employees. The goal of this application is to facilitate more interaction between colleagues and facilitate team bonding",
+    "version": "1.0.0",
+    "title": "Teamwork"
+  },
+  "host": "herokuapp.com",
+  "basePath": "/api/v1/",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication Endpoints"
+    },
+    {
+      "name": "Articles",
+      "description": "Access to Articles API endpoints"
+    },
+    {
+      "name": "Comments",
+      "description": "Access to comments API endpoints"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/signin/": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User login",
+        "description": "User Login endpoint",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User credentials to be used for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Signin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is successfully logged in"
+          },
+          "400": {
+            "description": "Invalid credentials"
+          },
+          "422": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/auth/create-user/": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User sign up",
+        "description": "User Sign Up endpoint",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User credentials to be used for create account",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Signup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          },
+          "422": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/gifs/": {
+      "post": {
+        "tags": [
+          "Gifs"
+        ],
+        "summary": "Create new gif",
+        "description": "This can only be done by the logged in user.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data needed to create new gifs",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Gif"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GIF image successfully posted"
+          },
+          "422": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/articles/": {
+      "post": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Create new articles",
+        "description": "This can only be done by the logged in user.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data needed to create new articles",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article successfully created"
+          },
+          "422": {
+            "description": "Validation error"
+          }
+        }
+      }
+    },
+    "/gifs/{gifId}": {
+      "get": {
+        "tags": [
+          "Gifs"
+        ],
+        "summary": "Get a single gif",
+        "description": "This can only be done by the logged in user.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "gifId",
+            "in": "path",
+            "type": "integer",
+            "description": "Gif id needs to be specified",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gifs"
+        ],
+        "summary": "Delete a gif",
+        "description": "This can only be done by the logged in user.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "gifId",
+            "in": "path",
+            "type": "integer",
+            "description": "Gif id needs to be specified",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "“gif post successfully deleted"
+          },
+          "404": {
+            "description": "Gif not found !"
+          }
+        }
+      }
+    },
+    "/articles/{articleId}": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Get a single article",
+        "description": "This can only be done by the logged in user.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "type": "integer",
+            "description": "Article id need to specify",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Edit an articles",
+        "description": "This can only be done by the logged in user.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "type": "integer",
+            "description": "Article id need to specify",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data needed to create new articles",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Article"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article successfully updated"
+          },
+          "422": {
+            "description": "Validation error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Delete an articles",
+        "description": "This can only be done by the logged in user.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "type": "integer",
+            "description": "Article id need to specify",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Article successfully deleted"
+          },
+          "404": {
+            "description": "Article not found !"
+          }
+        }
+      }
+    },
+    "/articles/{articleId}/comments": {
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Add new comment",
+        "description": "This can be only be done by the logged in.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "articleId",
+            "in": "path",
+            "type": "integer",
+            "description": "Article id need to specify",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment successfully created"
+          },
+          "422": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/gifs/{gifId}/comments": {
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Add new comment",
+        "description": "This can be only be done by the logged in.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "gifId",
+            "in": "path",
+            "type": "integer",
+            "description": "Gif id needs to be specified",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comment successfully created"
+          },
+          "422": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/feed/": {
+      "get": {
+        "tags": [
+          "Articles", "Gifs"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "User can view all articles and gifs",
+        "description": "This can only be done by the logged in user.",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Feed successfully retrieved"
+          }
+        }
+      }
+    },
+    "/feeds/:tagId/tags": {
+      "get": {
+        "tags": [
+          "Articles", "Gifs"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "User can view articles and gifs by tag",
+        "description": "This can only be done by the logged in user.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/author/articles/:authorId": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "User can view articles by author",
+        "description": "This can only be done by the logged in user.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/author/gifs/:gifId": {
+      "get": {
+        "tags": [
+          "Gifs"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "User can view gifs by author",
+        "description": "This can only be done by the logged in user.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Signin": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "create-user": {
+      "type": "object",
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "password",
+        "gender",
+        "jobRole",
+        "department",
+        "address"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "jobRole": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "Article": {
+      "type": "object",
+      "required": [
+        "title",
+        "article"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "article": {
+          "type": "string"
+        }
+      }
+    },
+    "Gif": {
+      "type": "object",
+      "required": [
+        "title",
+        "image"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
