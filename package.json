@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/nocodes/teamwork#readme",
   "dependencies": {
+    "@hapi/joi": "^15.1.1",
     "cloudinary": "^1.16.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
