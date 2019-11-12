@@ -27,7 +27,7 @@ describe('Create user account endpoint', () => {
     const data = {
       firstName: 'bolaji',
       lastName: 'akande',
-      email: 'bolaj@gmail.com',
+      email: 'bolaji@gmail.com',
       password: 'password',
       gender: 'male',
       jobRole: 'developer',
