@@ -6,8 +6,8 @@ const Auth = {
     if (!token) {
       return response.status(401)
         .send({
-          status: response.statusCode,
-          message: 'Unauthorized, No token provided',
+          status: 'error',
+          error: 'Unauthorized, No token provided',
         });
     }
 
@@ -16,8 +16,8 @@ const Auth = {
       if (!user) {
         return response.status(401)
           .send({
-            status: response.statusCode,
-            message: 'Token expired',
+            status: 'error',
+            error: 'Token expired',
           });
       }
       request.user = { id: user.id };
@@ -25,8 +25,8 @@ const Auth = {
     } catch (error) {
       return response.status(401)
         .send({
-          status: response.statusCode,
-          message: 'Invalid token',
+          status: 'error',
+          error: 'Invalid token',
         });
     }
   },
