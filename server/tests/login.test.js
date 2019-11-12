@@ -17,7 +17,7 @@ describe('User Authentication', () => {
         response.body.should.have.property('status')
           .equal('error');
         response.body.should.have.property('error')
-          .equal('empty field');
+          .equal('Field empty');
       });
     done();
   });
