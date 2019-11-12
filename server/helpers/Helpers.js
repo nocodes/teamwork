@@ -23,16 +23,15 @@ class Helpers {
       }
       return response.status(422)
         .send({
-          status: response.statusCode,
-          message: errors,
+          status: 'error',
+          error: errors,
         });
     }
   }
 
-  static sendResponse(response, codeStatus, message, data = undefined) {
+  static sendResponse(response, codeStatus, data = undefined) {
     const res = {
-      message,
-      status: codeStatus,
+      status: 'success',
     };
     if (data !== undefined) {
       res.data = data;
@@ -40,10 +39,18 @@ class Helpers {
     return response.status(codeStatus).send(res);
   }
 
+  static sendFailedResponse(response, codeStatus, message) {
+    const res = {
+      status: 'error',
+      error: message
+    };
+    return response.status(codeStatus).send(res);
+  }
+
   static dbError(response, query) {
     if (query.errors) {
       console.log(query.errors);
-      return Helpers.sendResponse(response, 501, 'Oops Something went wrong.');
+      return Helpers.sendFailedResponse(response, 501, 'Oops Something went wrong.');
     }
   }
 }
