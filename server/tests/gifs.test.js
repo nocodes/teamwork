@@ -20,7 +20,7 @@ before((done) => {
     .post('/api/v1/auth/signin/')
     .send(login)
     .end((error, response) => {
-      token = response.body.data.token;
+      //token = response.body.data.token;
     });
   done();
 });
@@ -35,7 +35,7 @@ describe('gifs endpoint tests', () => {
       .end((request, response) => {
         response.body.should.have.property('status')
           .equal('error');
-        response.body.should.have.property('status')
+        response.body.should.have.property('error')
           .equal('Field is empty');
       });
     done();
