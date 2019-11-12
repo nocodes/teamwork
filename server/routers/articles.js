@@ -1,8 +1,10 @@
 import express from 'express';
 import validation from '../middlewares/SchemaValidator';
+import Auth from '../middlewares/auth';
 
 const articles = new express.Router();
 articles.use(Auth.verifyToken);
+articles.use(validation);
 // Articles APIs
 articles.route('/feeds').get();
 articles.route('/articles').post();
