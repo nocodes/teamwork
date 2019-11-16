@@ -30,7 +30,7 @@ describe('Articles endpoint tests', () => {
     const data = {};
     chai.request(server)
       .post('/api/v1/articles')
-      .send(data)
+      .send(data) 
       .set('token', token)
       .end((request, response) => {
         response.body.should.have.property('status')

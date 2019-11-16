@@ -1,6 +1,5 @@
 import Database from '../database';
 import { Article } from '../../models';
-import Helpers from '../../helpers/Helpers';
 import { articles } from '../../mock';
 
 const database = new Database();
@@ -10,7 +9,6 @@ class CreateArticlesTable {
     return 'CREATE TABLE IF NOT EXISTS articles('
       + 'id SERIAL PRIMARY KEY,'
       + 'title VARCHAR (255) NOT NULL,'
-      + 'image VARCHAR (255) NULL,'
       + 'article TEXT NOT NULL,'
       + 'authorId INT NOT NULL CHECK (authorId >= 0),'
       + 'category_id INT NULL CHECK (category_id >= 0),'

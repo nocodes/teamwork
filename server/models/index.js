@@ -1,5 +1,9 @@
 import User from './user';
+import Article from './article';
+import Comment from './comment';
+import Category from './category';
+import Gif from './gif';
 
 export {
-  User,
+  User, Article, Comment, Category, Gif
 };
