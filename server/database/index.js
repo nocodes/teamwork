@@ -1,9 +1,9 @@
-import { CreateEmployeesTable, CreateArticlesTable, CreateCategoriesTable, CreateCommentsTable } from './migrations';
-//import CreateCommentsTable from './migrations/create_comments_table';
+import { CreateEmployeesTable, CreateArticlesTable, CreateGifsTable,  CreateCategoriesTable, CreateCommentsTable } from './migrations';
 
 const InitDB = async () => {
   await CreateEmployeesTable.run();
   await CreateArticlesTable.run();
+  await CreateGifsTable.run();
   await CreateCommentsTable.run();
   await CreateCategoriesTable.run();
 };

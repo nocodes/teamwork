@@ -24,16 +24,7 @@ describe('Create user account endpoint', () => {
   });
 
   it('should return success for valid entry', (done) => {
-    const data = {
-      firstName: 'bolaji',
-      lastName: 'akande',
-      email: 'bolaji@gmail.com',
-      password: 'password',
-      gender: 'male',
-      jobRole: 'developer',
-      department: 'Software developer',
-      address: 'Lagos-Ikeja',
-    };
+    const data = {...users[1] };
     chai.request(server)
       .post('/api/v1/auth/create-user')
       .send(data)
@@ -51,16 +42,7 @@ describe('Create user account endpoint', () => {
   });
 
   it('should return error for existing email', (done) => {
-    const data = {
-      firstName: 'bolaji',
-      lastName: 'akande',
-      email: 'bolaji@gmail.com',
-      password: 'password',
-      gender: 'male',
-      jobRole: 'developer',
-      department: 'Software developer',
-      address: 'Lagos-Ikeja',
-    };
+    const data = {...users[0]};
     chai.request(server)
       .post('/api/v1/auth/create-user')
       .send(data)

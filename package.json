@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "migrate": "babel-node ./server/database/index.js",
-    "test": "export NODE_ENV=test && nyc --reporter=text mocha --exit --require @babel/register --require @babel/polyfill server/tests/*",
+    "test": "set NODE_ENV=test && nyc --reporter=text mocha --exit --require @babel/register --require @babel/polyfill server/tests/*",
     "start": "nodemon --exec babel-node ./index.js"
   },
   "repository": {
