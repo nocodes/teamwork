@@ -38,6 +38,29 @@ class GifsController {
     }
     return Helpers.sendFailedResponse(response, 404, 'Article Not Found !!');
   }
+
+  static async addComment(request, response) {
+    const commentModel = new Comment();
+    const { user } = request;
+    const { comment } = request.body;
+    const { gifId } = request.params;
+    const article = await Model.getById(gifId);
+    const data = {
+      comment,
+      gif_id: parseInt(gifId),
+      employee_id: user.id,
+      createdOn: moment()
+        .format('YYYY-MM-DD HH:mm:ss'),
+    };
+    const save = await commentModel.create(data);
+    if (save.errors) Helpers.dbError(response, save);
+    return Helpers.sendResponse(response, 201, { 
+      'message' : 'comment successfully created',
+      'gifTitle' : gif.row.title,
+      'createdOn' : data.createdOn,
+      'comment': comment
+    });
+  }
 }
 
 export default GifsController;
