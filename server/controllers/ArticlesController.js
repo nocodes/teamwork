@@ -45,6 +45,22 @@ class ArticlesController {
     return Helpers.sendFailedResponse(response, 404, 'Article no found !');
   }
 
+  static async destroy(request, response) {
+    const { articleId } = request.params;
+    const { user } = request;
+    const destroy = await Model.delete({
+      authorId: user.id,
+      id: articleId,
+    });
+    if (destroy.errors) return Helpers.dbError(response, destroy);
+    if (destroy.count > 0) {
+      return Helpers.sendResponse(response, 204, { 
+        'message' : 'Article successfully deleted'
+      });
+    }
+    return Helpers.sendFailedResponse(response, 404, 'Article Not Found !!');
+  }
+
 }
 
 export default ArticlesController;
