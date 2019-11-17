@@ -61,6 +61,30 @@ class ArticlesController {
     return Helpers.sendFailedResponse(response, 404, 'Article Not Found !!');
   }
 
+  static async addComment(request, response) {
+    const commentModel = new Comment();
+    const { user } = request;
+    const { comment } = request.body;
+    const { articleId } = request.params;
+    const article = await Model.getById(articleId);
+    const data = {
+      comment,
+      article_id: parseInt(articleId),
+      employee_id: user.id,
+      createdOn: moment()
+        .format('YYYY-MM-DD HH:mm:ss'),
+    };
+    const save = await commentModel.create(data);
+    if (save.errors) Helpers.dbError(response, save);
+    return Helpers.sendResponse(response, 201, { 
+      'message' : 'Comment successfully created',
+      'article' :article.row,
+      'articleTitle' : article.row.title,
+      'createdOn' : data.createdOn,
+      'comment': comment
+    });
+  }
+
 }
 
 export default ArticlesController;

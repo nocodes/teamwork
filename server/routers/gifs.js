@@ -10,6 +10,6 @@ gifs.use(validation);
 gifs.route('/gifs').post(GifsController.store); //add cloudinary
 gifs.route('/gifs/:gifId').delete(GifsController.destroy);
 gifs.route('/gifs/:gifId').get();
-gifs.route('/gifs/:gifId/comments').post();
+gifs.route('/gifs/:gifId/comments').post(GifsController.addComment);
 
 export default gifs; 
