@@ -12,7 +12,7 @@ articles.route('/articles').post(ArticlesController.store);
 articles.route('/articles/:articleId').get();
 articles.route('/articles/:articleId').delete();
 articles.route('/articles/:articleId/comments').post();
-articles.route('/articles/:articleId').patch();
+articles.route('/articles/:articleId').patch(ArticlesController.update);
 articles.route('/feeds/:tagId/tags').get();
 articles.route('/author/articles/:authorId').get();
 
