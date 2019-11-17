@@ -4,10 +4,11 @@ import Schemas from '../validations';
 import Helpers from '../helpers/Helpers';
 
 const getSchema = (route, method) => {
-  const { userSchemas, articleSchema } = Schemas;
+  const { userSchemas, articleSchema, gifSchema } = Schemas;
   const schemas = {
     auth: userSchemas,
     articles: articleSchema,
+    gifs: gifSchema
   };
   const routePrefix = _.words(route)[0];
   let schema = _.get(schemas, routePrefix);
@@ -28,6 +29,7 @@ const validation = (request, response, next) => {
   if (route.substr(-1) !== '/') route += '/';
   const method = request.method.toLowerCase();
   if (route.includes('articles')) route = route.replace(new RegExp('\\d+', 'g'), ':articleId');
+  if (route.includes('gifs')) route = route.replace(new RegExp('\\d+', 'g'), ':gifId');
   const schemaObj = getSchema(route, method);
   if (_.includes(allowedRequestMethod, method) && _.has(schemaObj, route)) {
     const schema = _.get(schemaObj, route);
