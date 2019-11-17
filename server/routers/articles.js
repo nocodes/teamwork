@@ -8,7 +8,7 @@ articles.use(Auth.verifyToken);
 articles.use(validation);
 // Articles APIs
 articles.route('/feeds').get();
-articles.route('/articles').post(articlesController.store);
+articles.route('/articles').post(ArticlesController.store);
 articles.route('/articles/:articleId').get();
 articles.route('/articles/:articleId').delete();
 articles.route('/articles/:articleId/comments').post();
