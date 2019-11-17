@@ -19,8 +19,30 @@ class ArticlesController {
       'message' : 'Article successfully posted',
       'articleId' : store.rows[0].id,
       'createdOn' : moment().format('YYYY-MM-DD HH:mm:ss'),
-      'title': storerows[0].title
+      'title': store.rows[0].title
     });
+  }
+
+  static async update(request, response) {
+    const { articleId } = request.params;
+    const { user } = request;
+    const data = {
+      ...request.body,
+      updatedOn: moment().format('YYYY-MM-DD HH:mm:ss'),
+    };
+    const update = await Model.update(data, {
+      authorId: user.id,
+      id: articleId,
+    });
+    if (update.errors) return Helpers.dbError(response, update);
+    if (update.count > 0) {
+      return Helpers.sendResponse(response, 200,  { 
+        'message' : 'Article successfully updated',
+        'article' : update.rows[0],
+        'title': update.rows[0].title
+      });
+    }
+    return Helpers.sendFailedResponse(response, 404, 'Article no found !');
   }
 
 }
