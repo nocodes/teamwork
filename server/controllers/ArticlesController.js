@@ -85,6 +85,22 @@ class ArticlesController {
     });
   }
 
+  static async findOne(request, response) {
+    const { articleId } = request.params;
+    const result = await Model.getById(articleId);
+    if (result.errors) return Helpers.dbError(response, result);
+    if (result.count > 0) {
+      return Helpers.sendResponse(response, 200, { 
+        'id': result.row.id,
+        'article' : result.row,
+        'title' : result.row.title,
+        'createdOn' : result.row.createdOn,
+        'comments': [] //add comments later
+      });
+    }
+    return Helpers.sendFailedResponse(response, 404, 'Article not found !');
+  }
+
 }
 
 export default ArticlesController;
