@@ -1,9 +1,10 @@
 import moment from 'moment';
 import Helpers from '../helpers/Helpers';
-import { Article, Category, Comment } from '../models';
+import { Article, Gif, Comment } from '../models';
 import { articles } from '../mock';
 
 const Model = new Article();
+const Model_1 = new Gif();
 
 class ArticlesController {
   static async store(request, response) {
@@ -99,6 +100,16 @@ class ArticlesController {
       });
     }
     return Helpers.sendFailedResponse(response, 404, 'Article not found !');
+  }
+
+  static async findAll(request, response) {
+    const _articles = await Model.all();
+    const _gifs = await Model_1.all();
+    if (_articles.errors) Helpers.dbError(response, _articles);
+    if (_gifs.errors) Helpers.dbError(response, _gifs);
+    return Helpers.sendResponse(response, 200, [
+      _articles.rows, _gifs.rows //work on find all
+    ]) 
   }
 
 }
