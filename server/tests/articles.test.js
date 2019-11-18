@@ -268,7 +268,7 @@ describe('Articles endpoint tests', () => {
           .equal('success');
         response.body.data.should.have.property('message')
           .equal('Successfully found articles by tag');
-        response.body.data.should.be.an('Array');
+        response.body.data.should.be.an('Object');
       });
   });
 
@@ -295,7 +295,7 @@ describe('Articles endpoint tests', () => {
           .equal('success');
         response.body.data.should.have.property('message')
           .equal('Successfully found articles by author');
-        response.body.data.should.be.an('Array');
+        response.body.data.should.be.an('Object');
       });
   });
 });
