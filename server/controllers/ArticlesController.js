@@ -78,7 +78,7 @@ class ArticlesController {
     if (save.errors) Helpers.dbError(response, save);
     return Helpers.sendResponse(response, 201, { 
       'message' : 'Comment successfully created',
-      'article' :article.row,
+      'article' :article.row.article,
       'articleTitle' : article.row.title,
       'createdOn' : data.createdOn,
       'comment': comment
@@ -92,7 +92,7 @@ class ArticlesController {
     if (result.count > 0) {
       return Helpers.sendResponse(response, 200, { 
         'id': result.row.id,
-        'article' : result.row,
+        'article' : result.row.article,
         'title' : result.row.title,
         'createdOn' : result.row.createdOn,
         'comments': [] //add comments later

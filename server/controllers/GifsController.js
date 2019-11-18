@@ -36,7 +36,7 @@ class GifsController {
       return Helpers.sendResponse(response, 204, {
         'message' : 'gif post successfully deleted'});
     }
-    return Helpers.sendFailedResponse(response, 404, 'Article Not Found !!');
+    return Helpers.sendFailedResponse(response, 404, 'Gif Not Found !!');
   }
 
   static async addComment(request, response) {
@@ -61,6 +61,23 @@ class GifsController {
       'comment': comment
     });
   }
+
+  static async findOne(request, response) {
+    const { articleId } = request.params;
+    const result = await Model.getById(gifId);
+    if (result.errors) return Helpers.dbError(response, result);
+    if (result.count > 0) {
+      return Helpers.sendResponse(response, 200, { 
+        'id': result.row.id,
+        'url' : result.row.url,
+        'title' : result.row.title,
+        'createdOn' : result.row.createdOn,
+        'comments': [] //add comments later
+      });
+    }
+    return Helpers.sendFailedResponse(response, 404, 'Gif not found !');
+  }
+
 }
 
 export default GifsController;
