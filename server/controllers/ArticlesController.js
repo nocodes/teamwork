@@ -101,7 +101,7 @@ class ArticlesController {
     }
     return Helpers.sendFailedResponse(response, 404, 'Article not found !');
   }
-
+ 
   static async findAll(request, response) {
     const _articles = await Model.all();
     const _gifs = await Model_1.all();
@@ -112,6 +112,30 @@ class ArticlesController {
     ]) 
   }
 
+  static async findByCategory(request, response) {
+    const { tagId } = request.params;
+    const categoryModel = new Category(tagId);
+    const results = await categoryModel.articles();
+    if (results.errors) return Helpers.dbError(response, results);
+    if (results.count < 1) return Helpers.sendFailedResponse(response, 404, 'No articles found !');
+    return Helpers.sendResponse(response, 200, { 
+      'message' : 'Successfully found articles by tag',
+      'article' : results.rows
+    });
+  }
+  
+  static async findByAuthor(request, response) {
+    const { authorId } = request.params;
+    const results = await Model.getByAuthor(authorId);
+    if (results.errors) return Helpers.dbError(response, results);
+    if (results.count <= 0) {
+      return Helpers.sendFailedResponse(response, 404, 'No articles found !', []);
+    }
+    return Helpers.sendResponse(response, 200, { 
+      'message' : 'Successfully found articles by author',
+      'article' : results.rows
+    });
+  }
 }
 
 export default ArticlesController;
