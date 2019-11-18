@@ -7,7 +7,7 @@ const articles = new express.Router();
 articles.use(Auth.verifyToken);
 articles.use(validation);
 // Articles APIs.
-articles.route('/feeds').get();
+articles.route('/feeds').get(ArticlesController.findAll);
 articles.route('/articles').post(ArticlesController.store);
 articles.route('/articles/:articleId').get(ArticlesController.findOne);
 articles.route('/articles/:articleId').delete(ArticlesController.destroy);
