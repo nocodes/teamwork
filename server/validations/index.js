@@ -1,7 +1,9 @@
 import userSchemas from './auth';
+import articleSchema from './article';
+import gifSchema from './gif';
 
 const validationSchemas = {
-  userSchemas,
+  userSchemas, articleSchema, gifSchema
 };
 
-export default validationSchemas;
+export default validationSchemas; 
