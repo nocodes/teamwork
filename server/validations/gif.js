@@ -4,7 +4,7 @@ const gif = {
   title: Joi.string()
     .trim()
     .required(),
-  image: Joi.image().required(),
+  //image: Joi.image().required(),
 };
 
 const paramsGifId = {
