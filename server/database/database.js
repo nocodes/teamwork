@@ -38,7 +38,7 @@ class Database {
   }
 
   async create(data) {
-    const params = [];
+    const params = []; 
     const chunks = [];
     const values = [];
     const keys = [];

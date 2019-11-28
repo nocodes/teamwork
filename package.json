@@ -4,7 +4,7 @@
   "description": "Andela Challenge: Teamwork is an internal social network for organizations' employees. The goal of this application is to facilitate more interaction between colleagues and facilitate team bonding.",
   "main": "index.js",
   "scripts": {
-    "migrate": "babel-node ./server/database/index.js",
+    "migrate": "babel-node ./server/database/init_db.js",
     "test": "set NODE_ENV=test && nyc --reporter=text mocha --exit --require @babel/register --require @babel/polyfill server/tests/*",
     "start": "nodemon --exec babel-node ./index.js",
     "heroku": "babel-node ./index.js"

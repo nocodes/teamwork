@@ -2,7 +2,7 @@ import moment from 'moment';
 
 const gifs = [
   {
-    gifId: 5,
+    id: 5,
     createdOn: moment()
       .format('YYYY-MM-DD HH:mm:ss'),
     category_id: 1,
@@ -18,7 +18,7 @@ const gifs = [
     ],
   },
   {
-    gifId: 4,
+    id: 4,
     createdOn: moment()
       .format('YYYY-MM-DD HH:mm:ss'),
     category_id: 1,
