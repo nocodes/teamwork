@@ -1,7 +1,4 @@
 import Database from '../database';
-import { Article } from '../../models';
-import Helpers from '../../helpers/Helpers';
-import { articles } from '../../mock';
 
 const database = new Database();
 

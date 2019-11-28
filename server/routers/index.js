@@ -10,8 +10,8 @@ routers.route('/').get((request, response) => response.status(400).send({
   message: 'Bad Request Error',
 }));
 
+routers.use(auth);
 routers.use(articles);
 routers.use(gifs);  
-routers.use(auth);
 
 export default routers;

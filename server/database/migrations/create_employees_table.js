@@ -26,7 +26,7 @@ class CreateEmployeesTable {
 
   static async seeds() {
     const employee = new User();
-    const employeeMock = { ...dummy };
+    const employeeMock = { ...dummy }; 
     if (employeeMock) {
       employeeMock.password = Helpers.hashPassword(dummy.textPassword);
       delete employeeMock.id;

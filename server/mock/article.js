@@ -2,7 +2,7 @@ import moment from 'moment';
 
 const articles = [
   {
-    articleId: 5,
+    id: 5,
     createdOn: moment()
       .format('YYYY-MM-DD HH:mm:ss'),
     category_id: 1,
@@ -20,7 +20,7 @@ const articles = [
     ],
   },
   {
-    articleId: 4,
+    id: 4,
     createdOn: moment()
       .format('YYYY-MM-DD HH:mm:ss'),
     category_id: 1,

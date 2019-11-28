@@ -4,10 +4,10 @@ const InitDB = async () => {
   await CreateEmployeesTable.run();
   await CreateArticlesTable.run();
   await CreateGifsTable.run();
-  await CreateCommentsTable.run();
   await CreateCategoriesTable.run();
+  await CreateCommentsTable.run();
 };
 
 module.exports = InitDB;
 
-require('make-runnable');
+require('make-runnable');  
